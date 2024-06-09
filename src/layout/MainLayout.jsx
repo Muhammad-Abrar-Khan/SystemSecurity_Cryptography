@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import CaesarCipher from '../components/CaesarCipher';
-import OneTimePad from '../components/OneTimePad';
-import VigenereCipher from '../components/VigenereCipher';
-import RailFenceCipher from '../components/RailFenceCipher';
-import PlayfairCipher from '../components/PlayfairCipher';
+import CaesarCipher from '../components/Caesar'; // Make sure this path is correct
+import OneTimePad from '../components/OneTimePad'; // Make sure this path is correct
+import VigenereCipher from '../components/Vigenere'; // Make sure this path is correct
+import RailFenceCipher from '../components/RailFenceCipher'; // Make sure this path is correct
+import PlayfairCipher from '../components/PlayFair'; // Make sure this path is correct
 
 const MainLayout = () => {
   const [selectedCipher, setSelectedCipher] = useState('Caesar');
@@ -26,12 +26,12 @@ const MainLayout = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-6">Cipher Methods</h1>
+    <div className="h-screen flex flex-col items-center justify-center bg-gray-100">
+      <h1 className="text-3xl font-bold mb-4">Cipher Methods</h1>
       <div className="mb-4">
-        <label className="block text-lg mb-2">Select Cipher Method</label>
+        <label className="block mb-2">Select Cipher Method</label>
         <select
-          className="border border-gray-300 p-2"
+          className="border border-gray-300 p-2 w-full"
           value={selectedCipher}
           onChange={(e) => setSelectedCipher(e.target.value)}
         >
@@ -42,7 +42,7 @@ const MainLayout = () => {
           <option value="Playfair">Playfair Cipher</option>
         </select>
       </div>
-      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+      <div className="w-full flex justify-center">
         {renderCipherComponent()}
       </div>
     </div>
@@ -50,4 +50,3 @@ const MainLayout = () => {
 };
 
 export default MainLayout;
-
