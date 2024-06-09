@@ -4,7 +4,7 @@ const CipherMethod = ({ title, encryptFunction, decryptFunction, showKeyInput = 
   const [plainText, setPlainText] = useState('');
   const [key, setKey] = useState('');
   const [output, setOutput] = useState('');
-  const [operation, setOperation] = useState('encrypt'); // Default to encrypt
+  const [operation, setOperation] = useState('encrypt');
 
   const handleProcess = () => {
     if (operation === 'decrypt') {

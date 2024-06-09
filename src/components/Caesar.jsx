@@ -1,32 +1,35 @@
 import React from 'react';
 import CipherMethod from './CipherMethod';
 
-const CaesarCipher = () => {
-  const processText = (text, shift) => {
-    return text
-      .toUpperCase()
-      .split('')
-      .map((char) => {
-        if (char.match(/[A-Z]/)) {
-          const code = char.charCodeAt(0);
-          let shiftedCode = ((code - 65 + shift + 26) % 26) + 65;
-          return String.fromCharCode(shiftedCode);
-        } else {
-          return char;
+const Caesar = () => {
+  const encryptCaesar = (text, shift) => {
+    const result = text.split('').map(char => {
+      if (char.match(/[a-z]/i)) {
+        const code = char.charCodeAt(0);
+        let shifted = code + shift;
+        if (char >= 'A' && char <= 'Z') {
+          shifted = ((shifted - 65) % 26) + 65;
+        } else if (char >= 'a' && char <= 'z') {
+          shifted = ((shifted - 97) % 26) + 97;
         }
-      })
-      .join('');
+        return String.fromCharCode(shifted);
+      }
+      return char;
+    });
+    return result.join('');
+  };
+
+  const decryptCaesar = (text, shift) => {
+    return encryptCaesar(text, -shift);
   };
 
   return (
     <CipherMethod
       title="Caesar Cipher"
-      encryptFunction={(text, key) => processText(text, 3)}
-      decryptFunction={(text, key) => processText(text, -3)}
-      showKeyInput={false} // Hide key input for Caesar Cipher
+      encryptFunction={encryptCaesar}
+      decryptFunction={decryptCaesar}
     />
   );
 };
 
-export default CaesarCipher;
-
+export default Caesar;

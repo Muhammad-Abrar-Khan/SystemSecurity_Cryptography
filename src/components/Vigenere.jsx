@@ -1,38 +1,54 @@
 import React from 'react';
 import CipherMethod from './CipherMethod';
 
-const VigenereCipher = () => {
-  const generateKeyStream = (text, key) => {
-    const repeatedKey = key.repeat(Math.ceil(text.length / key.length)).toUpperCase();
-    return repeatedKey.slice(0, text.length);
+const Vigenere = () => {
+  const encryptVigenere = (text, key) => {
+    key = key.toUpperCase();
+    let result = '';
+
+    for (let i = 0, j = 0; i < text.length; i++) {
+      const c = text.charCodeAt(i);
+      if (c >= 65 && c <= 90) {
+        result += String.fromCharCode((c - 65 + key.charCodeAt(j % key.length) - 65) % 26 + 65);
+        j++;
+      } else if (c >= 97 && c <= 122) {
+        result += String.fromCharCode((c - 97 + key.charCodeAt(j % key.length) - 65) % 26 + 97);
+        j++;
+      } else {
+        result += text.charAt(i);
+      }
+    }
+
+    return result;
   };
 
-  const processText = (text, keyStream, encrypt) => {
-    return text
-      .toUpperCase()
-      .split('')
-      .map((char, index) => {
-        if (char.match(/[A-Z]/)) {
-          const code = char.charCodeAt(0);
-          const shift = keyStream.charCodeAt(index) - 65;
-          let shiftedCode = encrypt
-            ? ((code - 65 + shift + 26) % 26) + 65
-            : ((code - 65 - shift + 26) % 26) + 65;
-          return String.fromCharCode(shiftedCode);
-        } else {
-          return char;
-        }
-      })
-      .join('');
+  const decryptVigenere = (text, key) => {
+    key = key.toUpperCase();
+    let result = '';
+
+    for (let i = 0, j = 0; i < text.length; i++) {
+      const c = text.charCodeAt(i);
+      if (c >= 65 && c <= 90) {
+        result += String.fromCharCode((c - 65 - (key.charCodeAt(j % key.length) - 65) + 26) % 26 + 65);
+        j++;
+      } else if (c >= 97 && c <= 122) {
+        result += String.fromCharCode((c - 97 - (key.charCodeAt(j % key.length) - 65) + 26) % 26 + 97);
+        j++;
+      } else {
+        result += text.charAt(i);
+      }
+    }
+
+    return result;
   };
 
   return (
     <CipherMethod
-      title="Vigenère Cipher"
-      encryptFunction={(text, key) => processText(text, generateKeyStream(text, key), true)}
-      decryptFunction={(text, key) => processText(text, generateKeyStream(text, key), false)}
+      title="Vigenere Cipher"
+      encryptFunction={encryptVigenere}
+      decryptFunction={decryptVigenere}
     />
   );
 };
 
-export default VigenereCipher;
+export default Vigenere;
